@@ -1,16 +1,19 @@
 <template>
   <div>
+    <!-- Pagination -->
     <div class="text-center pb-5">
       <v-pagination
-        v-model="page"
-        :length="4"
+        v-model="pagination.page"
+        :length="pages"
+         @input="onPageChange"
       ></v-pagination>
     </div>
 
+    <!-- Card List -->
     <v-row class="mx-10">
       <v-col
         class="d-flex flex-column"
-        v-for="(film, index) in films"
+        v-for="(film, index) in shownFilms"
         :key="index"
         cols="12"
         md="6"
@@ -42,19 +45,57 @@
     },
 
     data: () => ({
-      films: null,
-      page: 1
+      pagination: {
+        films: null,
+        page: 1,
+        total: 0,
+        perPage: 4,
+        visible: 4
+      }
     }),
 
-    created() {
+    watch() {
+      // this.pagination.page
+    },
+
+    computed: {
+      pages () {
+        return Math.ceil(this.pagination.total/this.pagination.perPage)
+      },
+      shownFilms() {
+        // Splice items from list
+        let tempFilms = JSON.parse(JSON.stringify(this.films));
+        let spliceIndex = (this.pagination.page*this.pagination.perPage)-this.pagination.perPage
+
+        console.log('count', this.pagination.page, this.pagination.perPage)
+        console.log('films', spliceIndex, tempFilms)
+
+        return tempFilms.splice(spliceIndex, this.pagination.perPage)
+      }
+    },
+
+    mounted() {
       this.getFilms();
     },
 
     methods: {
+      onPageChange(event) {
+        console.log(event)
+      },
       async getFilms() {
+        // Retrive all films
         let response = await FilmData.getFilms()
+        this.pagination.total = response.data.length
         this.films = response.data
-        console.log(this.films, response)
+      },
+
+      // Pagination
+      showNextPage() {
+        this.pagination.page++
+      },
+
+      showPrevPage() {
+        this.pagination.page--
       }
     }
   }
