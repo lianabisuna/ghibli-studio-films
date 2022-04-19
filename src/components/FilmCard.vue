@@ -19,7 +19,7 @@
 
                 <v-card-text style="color: #263238;">
                     <v-row class="px-3">
-                        <v-col cols="3" :style="{ position: 'relative' }">
+                        <v-col v-show="screen.md" cols="3" :style="{ position: 'relative' }">
                             <div class="">
                                 <v-img
                                     height="200"
@@ -29,7 +29,7 @@
                             </div>
                         </v-col>
 
-                        <v-col cols="9" :style="{ minHeight: '11.5rem' }" class="pl-6">
+                        <v-col cols="12" md="9" :style="{ minHeight: '11.5rem' }" :class="{'pl-6':screen.md}">
                             <h1 class="break-word">{{ title }}</h1>
                             <div class="subtitle-1 pb-2">{{ originalTitle }} ({{ releaseDate }})</div>
                             <div class="truncate text-justify">{{ description }}</div>
@@ -54,6 +54,10 @@ export default {
         rating: { type: String, default: '' },
         banner: { type: String, default: '' },
         image: { type: String, default: '' },
+    },
+
+    computed: {
+        screen() { return this.$vuetify.breakpoint }
     }
 }
 </script>

@@ -3,6 +3,7 @@
     <!-- Pagination -->
     <div class="d-flex justify-center align-center pb-10 hidden">
       <v-pagination
+        v-if="shownFilms.length"
         v-model="pagination.page"
         :length="pages"
         @input="onPageChange"
@@ -12,7 +13,7 @@
     </div>
 
     <!-- Card List -->
-    <v-row class="mx-10" align="center" justify="center">
+    <v-row :class="{ 'mx-10':screen.md }" align="center" justify="center">
       <v-col
         class="d-flex flex-column"
         v-for="(film, index) in shownFilms"
@@ -47,8 +48,8 @@
     },
 
     data: () => ({
+      films: [],
       pagination: {
-        films: null,
         page: 1,
         total: 0,
         perPage: 4,
@@ -56,27 +57,23 @@
       }
     }),
 
-    watch() {
-      // this.pagination.page
-    },
-
     computed: {
       pages () {
         return Math.ceil(this.pagination.total/this.pagination.perPage)
       },
       shownFilms() {
-        // Splice items from list
-        let tempFilms = JSON.parse(JSON.stringify(this.films));
+        let data = this.films
         let spliceIndex = (this.pagination.page*this.pagination.perPage)-this.pagination.perPage
 
-        console.log('count', this.pagination.page, this.pagination.perPage)
-        console.log('films', spliceIndex, tempFilms)
+        // console.log('count', this.pagination.page, this.pagination.perPage)
+        console.log('films', spliceIndex, data.slice(spliceIndex, spliceIndex + this.pagination.perPage))
 
-        return tempFilms.splice(spliceIndex, this.pagination.perPage)
-      }
+        return data.slice(spliceIndex, spliceIndex + this.pagination.perPage)
+      },
+      screen() { return this.$vuetify.breakpoint }
     },
 
-    mounted() {
+    created() {
       this.getFilms();
     },
 
@@ -89,16 +86,8 @@
         let response = await FilmData.getFilms()
         this.pagination.total = response.data.length
         this.films = response.data
+        console.log(this.films)
       },
-
-      // Pagination
-      showNextPage() {
-        this.pagination.page++
-      },
-
-      showPrevPage() {
-        this.pagination.page--
-      }
     }
   }
 </script>

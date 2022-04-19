@@ -46,7 +46,7 @@
     name: 'FilmView',
 
     data: () => ({
-      film: null
+      film: []
     }),
 
     mounted() {
