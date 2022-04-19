@@ -3,34 +3,42 @@
         :to="{ name: 'film', params: { id: id }}"
         class="flex-grow-1 d-flex"
     >
-        <v-card rounded="0">
-            <v-img
-                cover
-                height="300"
-                :src="banner"
-            >
-                <AppRating :value="rating" />
-            </v-img>
+        <v-hover v-slot="{ hover }">
+            <v-card tile light flat style="position: relative">
+                <v-img
+                    cover
+                    height="300"
+                    :src="banner"
+                >
+                    <AppRating :value="rating" />
+                </v-img>
 
-            <v-card-text>
-                <v-row>
-                    <v-col cols="3" :style="{ position: 'relative' }">
-                        <v-img
-                            contain
-                            height="200"
-                            :src="image"
-                            class="float-image"
-                        ></v-img>
-                    </v-col>
+                <div v-if="hover" style="height: 5px; background-color: orange; position: absolute; top: 0; left: 0; width: 100%;"></div>
 
-                    <v-col cols="9" :style="{ minHeight: '11.2rem' }">
-                        <h1 class="break-word">{{ title }}</h1>
-                        <div class="subtitle-1 pb-2">{{ originalTitle }} ({{ releaseDate }})</div>
-                        <div class="truncate">{{ description }}</div>
-                    </v-col>
-                </v-row>
-            </v-card-text>
-        </v-card>
+                
+
+                <v-card-text style="color: #263238;">
+                    <v-row class="px-3">
+                        <v-col cols="3" :style="{ position: 'relative' }">
+                            <div class="">
+                                <v-img
+                                    contain
+                                    height="200"
+                                    :src="image"
+                                    class="float-image"
+                                ></v-img>
+                            </div>
+                        </v-col>
+
+                        <v-col cols="9" :style="{ minHeight: '11.5rem' }" class="pl-6">
+                            <h1 class="break-word">{{ title }}</h1>
+                            <div class="subtitle-1 pb-2">{{ originalTitle }} ({{ releaseDate }})</div>
+                            <div class="truncate text-justify">{{ description }}</div>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+        </v-hover>
     </router-link>
 </template>
 
@@ -58,7 +66,7 @@ export default {
 
     .truncate {
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;  
         overflow: hidden;
     }

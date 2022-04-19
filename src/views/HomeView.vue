@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div style="max-width: 80rem; margin-left: auto; margin-right: auto">
     <!-- Pagination -->
-    <div class="text-center pb-5">
+    <div class="d-flex justify-center align-center pb-10 hidden">
       <v-pagination
         v-model="pagination.page"
         :length="pages"
-         @input="onPageChange"
+        @input="onPageChange"
+        circle
+        color="#FFA500"
       ></v-pagination>
     </div>
 
     <!-- Card List -->
-    <v-row class="mx-10">
+    <v-row class="mx-10" align="center" justify="center">
       <v-col
         class="d-flex flex-column"
         v-for="(film, index) in shownFilms"

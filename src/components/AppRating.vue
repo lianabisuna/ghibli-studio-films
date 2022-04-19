@@ -1,5 +1,5 @@
 <template>
-    <span class="rating px-3">{{ value }}</span>
+    <span class="rating">{{ value }}</span>
 </template>
 
 <script>
@@ -14,12 +14,11 @@ export default {
 
 <style scoped>
     .rating {
-        right: .5rem;
-        bottom: .5rem;
+        right: 1rem;
+        bottom: 0;
         position: absolute;
         color: white;
-        font-size: 1.5rem;
-        background-color: orange;
-        border-radius: 5px;
+        font-size: 3rem;
+        text-shadow: 2px 2px #263238;
     }
 </style>
