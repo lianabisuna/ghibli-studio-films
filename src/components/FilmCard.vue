@@ -22,7 +22,6 @@
                         <v-col cols="3" :style="{ position: 'relative' }">
                             <div class="">
                                 <v-img
-                                    contain
                                     height="200"
                                     :src="image"
                                     class="float-image"
