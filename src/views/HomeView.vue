@@ -1,19 +1,22 @@
 <template>
-  <div style="max-width: 80rem; margin-left: auto; margin-right: auto">
+  <div class="page-wrap">
     <!-- Pagination -->
-    <div class="d-flex justify-center align-center pb-10 hidden">
+    <div class="d-flex justify-center align-center pb-10">
       <v-pagination
+        circle
         v-if="shownFilms.length"
         v-model="pagination.page"
         :length="pages"
-        @input="onPageChange"
-        circle
         color="#FFA500"
       ></v-pagination>
     </div>
 
     <!-- Card List -->
-    <v-row :class="{ 'mx-10':screen.md }" align="center" justify="center">
+    <v-row
+      :class="{ 'mx-10': screen.md }"
+      align="center"
+      justify="center"
+    >
       <v-col
         class="d-flex flex-column"
         v-for="(film, index) in shownFilms"
@@ -52,8 +55,7 @@
       pagination: {
         page: 1,
         total: 0,
-        perPage: 4,
-        visible: 4
+        perPage: 4
       }
     }),
 
@@ -62,13 +64,8 @@
         return Math.ceil(this.pagination.total/this.pagination.perPage)
       },
       shownFilms() {
-        let data = this.films
         let spliceIndex = (this.pagination.page*this.pagination.perPage)-this.pagination.perPage
-
-        // console.log('count', this.pagination.page, this.pagination.perPage)
-        console.log('films', spliceIndex, data.slice(spliceIndex, spliceIndex + this.pagination.perPage))
-
-        return data.slice(spliceIndex, spliceIndex + this.pagination.perPage)
+        return this.films.slice(spliceIndex, spliceIndex + this.pagination.perPage)
       },
       screen() { return this.$vuetify.breakpoint }
     },
@@ -78,15 +75,10 @@
     },
 
     methods: {
-      onPageChange(event) {
-        console.log(event)
-      },
       async getFilms() {
-        // Retrive all films
         let response = await FilmData.getFilms()
-        this.pagination.total = response.data.length
         this.films = response.data
-        console.log(this.films)
+        this.pagination.total = this.films.length
       },
     }
   }

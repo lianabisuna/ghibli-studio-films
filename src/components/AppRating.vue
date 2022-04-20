@@ -1,5 +1,5 @@
 <template>
-    <span class="rating">{{ value }}</span>
+    <span class="rating white--text">{{ value }}</span>
 </template>
 
 <script>
@@ -17,7 +17,6 @@ export default {
         right: 1rem;
         bottom: 0;
         position: absolute;
-        color: white;
         font-size: 3rem;
         text-shadow: 2px 2px #263238;
     }
